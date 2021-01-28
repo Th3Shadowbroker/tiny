@@ -4,6 +4,7 @@ import Configuration, {initialDatabaseConfiguration} from "./util/Configuration"
 import helmet from "helmet";
 import {Connection, createConnection} from "typeorm";
 import {MysqlConnectionOptions} from "typeorm/driver/mysql/MysqlConnectionOptions";
+import TinyUrl from "./entities/TinyUrl";
 
 export default class TinyServer {
 
@@ -55,6 +56,11 @@ export default class TinyServer {
 
     get config(): Configuration {
         return this._config;
+    }
+
+    get connection(): Connection {
+        if (!this._connection) throw "The database connection has been accessed before it had been initialized!";
+        return this._connection;
     }
 
     static get instance(): TinyServer {

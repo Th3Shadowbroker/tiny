@@ -1,6 +1,6 @@
 import path from "path";
 import dotenv from "dotenv";
-import Configuration, {envOrDefault} from "./util/Configuration";
+import {envOrDefault} from "./util/Configuration";
 import TinyServer from "./TinyServer";
 
 const environment = process.env.NODE_ENV;
@@ -10,7 +10,6 @@ dotenv.config({
     encoding: "utf-8",
     path: environmentFile
 });
-
 new TinyServer({
     service: {
         port: envOrDefault("SERVICE_PORT", 8080)
@@ -24,10 +23,10 @@ new TinyServer({
         database: envOrDefault("DB_NAME", process.env.npm_package_name),
         synchronize: true,
         entities: [
-            "./entities/**/*.ts"
+            "./dist/entities/**/*.js"
         ],
         migrations: [
-            "./migrations/**/*.ts"
+            "./dist/migrations/**/*.js"
         ]
     }
 }).start()
