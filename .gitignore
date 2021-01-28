@@ -1,0 +1,11 @@
+# IDE
+.idea
+.vscode
+
+# JS and TS
+dist
+node_modules
+
+# Environment
+*.env
+*.env.local
