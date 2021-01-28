@@ -7,7 +7,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node dist/main.js",
     "dev": "tsc && cross-env NODE_ENV=development node dist/main.js",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts",
+    "migrate": "typeorm migration:run"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -25,6 +26,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "eslint": "^7.18.0",
+    "mysql": "^2.18.1",
     "typescript": "^4.1.3"
   }
 }
