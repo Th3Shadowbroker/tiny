@@ -8,7 +8,9 @@
     "start": "cross-env NODE_ENV=production node dist/main.js",
     "dev": "tsc && cross-env NODE_ENV=development node dist/main.js",
     "lint": "eslint src --ext .ts",
-    "migrate": "typeorm migration:run"
+    "migrate": "typeorm migration:run",
+    "compile": "tsc",
+    "watch": "tsc --watch"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
