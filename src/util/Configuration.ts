@@ -7,6 +7,7 @@ export default interface Configuration {
 
 export interface ServiceConfiguration {
     port: number
+    domain: string
 }
 
 export function initialDatabaseConfiguration(options: MysqlConnectionOptions): MysqlConnectionOptions {

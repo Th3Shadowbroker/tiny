@@ -4,7 +4,8 @@ import Configuration, {initialDatabaseConfiguration} from "./util/Configuration"
 import helmet from "helmet";
 import {Connection, createConnection} from "typeorm";
 import {MysqlConnectionOptions} from "typeorm/driver/mysql/MysqlConnectionOptions";
-import TinyUrl from "./entities/TinyUrl";
+import {json} from "body-parser";
+import logRequests from "./middleware/ExpressLog";
 
 export default class TinyServer {
 
@@ -21,12 +22,17 @@ export default class TinyServer {
     constructor(config: Configuration) {
         TinyServer._instance = this;
 
+        // Setup express
         this._app = express();
         this._app.use(helmet());
+        this._app.use(json());
 
+        // Setup logging
         this._log = log4js.getLogger(process.env.npm_package_name);
         this._log.level = process.env.NODE_ENV === "development" ? "debug" : "info";
+        this._app.use(logRequests(this._log));
 
+        // Save config
         this._config = config;
     }
 

@@ -13,6 +13,12 @@ export default class TinyUrl {
     })
     public short!: string;
 
+    @Column({
+        type: "varchar",
+        length: 25
+    })
+    public name!: string;
+
     @Column("varchar")
     public target!: string;
 
@@ -28,6 +34,11 @@ export default class TinyUrl {
     })
     public interactions!: number;
 
+    public async addInteraction(): Promise<TinyUrl> {
+        this.interactions++;
+        return await TinyUrl.repository().save(this);
+    }
+
     public static repository(): Repository<TinyUrl> {
         return TinyServer.instance.connection.getRepository(TinyUrl);
     }
@@ -37,6 +48,11 @@ export default class TinyUrl {
         turl.short = nanoid(6);
         turl.target = url;
         return await TinyUrl.repository().save(turl);
+    }
+
+    public static async resolve(shortId: string, ignore?: boolean): Promise<TinyUrl | undefined> {
+        const turl = await TinyUrl.repository().findOne({short: shortId});
+        return turl ? (!ignore ? turl.addInteraction() : turl) : undefined;
     }
 
 }

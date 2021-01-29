@@ -12,7 +12,8 @@ dotenv.config({
 });
 new TinyServer({
     service: {
-        port: envOrDefault("SERVICE_PORT", 8080)
+        port: envOrDefault("SERVICE_PORT", 8080),
+        domain: envOrDefault("SERVICE_DOMAIN", "http://localhost:8080")
     },
     database: {
         type: "mysql",
@@ -24,9 +25,6 @@ new TinyServer({
         synchronize: true,
         entities: [
             "./dist/entities/**/*.js"
-        ],
-        migrations: [
-            "./dist/migrations/**/*.js"
         ]
     }
 }).start()
