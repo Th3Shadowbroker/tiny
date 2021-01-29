@@ -4,7 +4,8 @@ import {envOrDefault} from "./util/Configuration";
 import TinyServer from "./TinyServer";
 
 const environment = process.env.NODE_ENV;
-const environmentFile = path.resolve(`./../${environment}.env.local`);
+const environmentFile = path.resolve(`${__dirname}/../${environment}.env.local`);
+console.log(`Environment: ${environment} (${environmentFile})`);
 
 dotenv.config({
     encoding: "utf-8",
