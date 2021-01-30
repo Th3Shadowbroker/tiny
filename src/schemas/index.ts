@@ -5,7 +5,11 @@ import {sendResponse} from "../util/GenericResponse";
 export const PostShrink = joi.object({
     url: joi.string()
             .uri({scheme: ["http", "https"]})
-            .required()
+            .required(),
+
+    name: joi.string()
+             .max(25)
+             .optional()
 });
 
 export function validate(schema: ObjectSchema): (req: Request, res: Response, next: NextFunction) => void {

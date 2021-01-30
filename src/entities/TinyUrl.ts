@@ -15,7 +15,8 @@ export default class TinyUrl {
 
     @Column({
         type: "varchar",
-        length: 25
+        length: 25,
+        nullable: true
     })
     public name!: string;
 
@@ -43,7 +44,7 @@ export default class TinyUrl {
         return TinyServer.instance.connection.getRepository(TinyUrl);
     }
 
-    public static async generate(url: string): Promise<TinyUrl> {
+    public static async generate(url: string, name?: string): Promise<TinyUrl> {
         const turl = new TinyUrl();
         turl.short = nanoid(6);
         turl.target = url;
