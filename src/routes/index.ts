@@ -1,4 +1,4 @@
-import {Application, Request, Response} from "express";
+import express, {Application, Request, Response} from "express";
 import {PostShrink, validate} from "../schemas";
 import {sendResponse} from "../util/GenericResponse";
 import TinyUrl from "../entities/TinyUrl";
@@ -54,4 +54,8 @@ export default function registerRoutes(app: Application): void {
     app.post("/api/shrink", validate(PostShrink), postShrink);
     app.get("/api/:shortId/i", getShortIdInfo);
     app.get("/:shortId", getShortId);
+
+    if (process.env.NODE_ENV === 'development') {
+        app.use("/swagger", express.static(`${__dirname}/../../docs/swagger`, {}));
+    }
 }

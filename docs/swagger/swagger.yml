@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  title: Tiny
+  description: A minimalistic service for url shortening.
+  version: 1.0.0
+  license:
+    name: Licensed under the MIT license
+
+paths:
+  '/{shortId}':
+    get:
+      summary: Resolves the short id and redirects to the target url.
+      parameters:
+        - in: path
+          name: shortId
+          schema:
+            type: string
+          required: true
+      responses:
+        '302':
+          description: Moved Temporarily
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      tags:
+        - General
+
+  '/api/shrink':
+    post:
+      summary: Shrinks the given url.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 25
+                url:
+                  type: string
+                  format: url
+                  maxLength: 255
+            examples:
+              shrink:
+                $ref: "#/components/examples/shrink"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                  message:
+                    type: string
+                  status:
+                    type: number
+              examples:
+                shrinkInfo:
+                  $ref: "#/components/examples/shrinkedUrl"
+        '500':
+          description: Internal Server Error
+      tags:
+        - API
+  '/api/{shortId}/i':
+    get:
+      summary: Get the information of a specific short id.
+      parameters:
+        - in: path
+          name: shortId
+          schema:
+            type: string
+          required: true
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        maxLength: 25
+                      target:
+                        type: string
+                        format: url
+                      interactions:
+                        type: number
+                      created:
+                        type: string
+                        format: date
+                  message:
+                    type: string
+                  status:
+                    type: number
+              examples:
+                shrinkInfo:
+                  $ref: "#/components/examples/shrinkInfo"
+        '500':
+          description: Internal Server Error
+      tags:
+        - API
+
+components:
+  examples:
+    shrink:
+      summary: Example request
+      value:
+        name: Example
+        url: 'https://example.com'
+    shrinkedUrl:
+      summary: Example response
+      value:
+        data: 'https://<your-website>.<tld>/IWUxh0'
+        message: OK
+        status: 200
+    shrinkInfo:
+      summary: Example response
+      value:
+        data:
+          name: Example
+          target: 'https://example.com'
+          interactions: 0
+          created: '2021-01-29T16:11:53.000Z'
+        message: OK
+        status: 200
+
+tags:
+  - name: General
+    description: General endpoints
+  - name: API
+    description: Management endpoints.

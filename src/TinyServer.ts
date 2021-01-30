@@ -1,11 +1,12 @@
 import log4js, {Logger} from "log4js";
 import express, {Application} from "express";
 import Configuration, {initialDatabaseConfiguration} from "./util/Configuration";
-import helmet from "helmet";
 import {Connection, createConnection} from "typeorm";
 import {MysqlConnectionOptions} from "typeorm/driver/mysql/MysqlConnectionOptions";
 import {json} from "body-parser";
 import logRequests from "./middleware/ExpressLog";
+import registerRoutes from "./routes";
+import helmet from "helmet";
 
 export default class TinyServer {
 
@@ -24,7 +25,7 @@ export default class TinyServer {
 
         // Setup express
         this._app = express();
-        this._app.use(helmet());
+        this._app.use(helmet({contentSecurityPolicy: false}));
         this._app.use(json());
 
         // Setup logging
@@ -34,6 +35,9 @@ export default class TinyServer {
 
         // Save config
         this._config = config;
+
+        // Register routes
+        registerRoutes(this._app);
     }
 
     async start(): Promise<void> {
