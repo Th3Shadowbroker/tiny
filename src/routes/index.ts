@@ -53,9 +53,11 @@ async function getShortId(req: Request, res: Response): Promise<void> {
 export default function registerRoutes(app: Application): void {
     app.post("/api/shrink", validate(PostShrink), postShrink);
     app.get("/api/:shortId/i", getShortIdInfo);
-    app.get("/:shortId", getShortId);
 
     if (process.env.NODE_ENV === 'development') {
-        app.use("/swagger", express.static(`${__dirname}/../../docs/swagger`, {}));
+        app.use("/swagger", express.static(`${__dirname}/../../docs/swagger/swagger.html`));
+        app.use("/swagger.yml", express.static(`${__dirname}/../../docs/swagger/swagger.yml`));
     }
+
+    app.get("/:shortId", getShortId);
 }
