@@ -1,5 +1,5 @@
 ## Tiny
-Tiny is a minimalistic REST service for url shortening.
+Tiny is a minimalistic REST service for url shortening, written in TypeScript.
 
 ### Requirements
 - Node.js v14.15.4+
