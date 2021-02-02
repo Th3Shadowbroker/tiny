@@ -19,11 +19,11 @@ The following settings are available:
 #### Database related
 `DB_HOST`: _(default: localhost)_: The database host.
 
-`DB_PORT`: _(default: localhost)_: The database port.
+`DB_PORT`: _(default: 3306)_: The database port.
 
-`DB_USER`: _(default: localhost)_: The database user.
+`DB_USER`: _(default: root)_: The database user.
 
-`DB_PASS`: _(default: localhost)_: The database password.
+`DB_PASS`: _(default: None)_: The database password.
 
 `DB_NAME`: _(default: tiny)_: The database tiny should use.
 
